@@ -18,6 +18,8 @@ y_test=y(test,:);
 [theta,cost]=model(lambda,X_train,y_train);
 p=predict(theta,X_test);
 cost_avg(i)=cost;
+p_avg=predict(theta,X_test);
+acc_avg(i)=mean(double(p_avg == y_test)) * 100;
 if(all(theta_avg,"all"))
     theta_avg=theta_avg+theta;
 else
@@ -26,8 +28,7 @@ end
 end
 theta_all=theta_avg./fold;
 cost_all=mean(cost_avg);
-p_avg=predict(theta_all,X_test);
-acc=mean(double(p_avg == y_test)) * 100;
+acc=mean(acc_avg);
 X_pred=readmatrix("testing_data.csv");
 y_pred=predict(theta_all,X_pred);
 writematrix(y_pred,"Pred.csv")
